@@ -7,8 +7,8 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address } from "@graphprotocol/graph-ts"
-import { ExampleEntity } from "../generated/schema"
-import { FeeAmountEnabled } from "../generated/PancakeV3Factory/PancakeV3Factory"
+import { FeeAmountEnabled } from "../generated/schema"
+import { FeeAmountEnabled as FeeAmountEnabledEvent } from "../generated/PancakeV3Factory/PancakeV3Factory"
 import { handleFeeAmountEnabled } from "../src/pancake-v-3-factory"
 import { createFeeAmountEnabledEvent } from "./pancake-v-3-factory-utils"
 
@@ -30,19 +30,19 @@ describe("Describe entity assertions", () => {
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("ExampleEntity created and stored", () => {
-    assert.entityCount("ExampleEntity", 1)
+  test("FeeAmountEnabled created and stored", () => {
+    assert.entityCount("FeeAmountEnabled", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(
-      "ExampleEntity",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a",
+      "FeeAmountEnabled",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "fee",
       "123"
     )
     assert.fieldEquals(
-      "ExampleEntity",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a",
+      "FeeAmountEnabled",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "tickSpacing",
       "123"
     )
