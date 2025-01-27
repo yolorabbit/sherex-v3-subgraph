@@ -5,37 +5,96 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: PancakeV3Factory
-    network: bsc
+    name: Factory
+    network: bsctestnet
     source:
-      address: "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
-      abi: PancakeV3Factory
-      startBlock: 26956207
+      address: "0xefc007c34ed53F5219D1d630bdE153EDDDEc3Ece"
+      abi: Factory
+      startBlock: 47744230
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
+      file: ./src/mappings/factory.ts
       entities:
-        - FeeAmountEnabled
-        - FeeAmountExtraInfoUpdated
-        - OwnerChanged
-        - PoolCreated
-        - SetLmPoolDeployer
-        - WhiteListAdded
+        - Pool
+        - Token
       abis:
-        - name: PancakeV3Factory
-          file: ./abis/PancakeV3Factory.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: Pool
+          file: ./abis/pool.json
       eventHandlers:
-        - event: FeeAmountEnabled(indexed uint24,indexed int24)
-          handler: handleFeeAmountEnabled
-        - event: FeeAmountExtraInfoUpdated(indexed uint24,bool,bool)
-          handler: handleFeeAmountExtraInfoUpdated
-        - event: OwnerChanged(indexed address,indexed address)
-          handler: handleOwnerChanged
         - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
           handler: handlePoolCreated
-        - event: SetLmPoolDeployer(indexed address)
-          handler: handleSetLmPoolDeployer
-        - event: WhiteListAdded(indexed address,bool)
-          handler: handleWhiteListAdded
-      file: ./src/pancake-v-3-factory.ts
+  - kind: ethereum/contract
+    name: NonfungiblePositionManager
+    network: bsctestnet
+    source:
+      address: "0xD35707a2C351D378F73115Db71EECb67D3ec280B"
+      abi: NonfungiblePositionManager
+      startBlock: 47744230
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/position-manager.ts
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: Pool
+          file: ./abis/pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleIncreaseLiquidity
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: handleCollect
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+templates:
+  - kind: ethereum/contract
+    name: Pool
+    network: bsctestnet
+    source:
+      abi: Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/core.ts
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: Pool
+          file: ./abis/pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Initialize(uint160,int24)
+          handler: handleInitialize
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24,uint128,uint128)
+          handler: handleSwap
+        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleBurn
+        - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
+          handler: handleFlash
