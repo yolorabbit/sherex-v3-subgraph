@@ -21,57 +21,57 @@ export class StaticTokenDefinition {
 
     // Add DGD
     let tokenDGD = new StaticTokenDefinition(
-      Address.fromString("0x662474D0D34E78d5158eA20C1B41c5afDEb0dae5"),
-      "USDT",
-      "USDT",
-      BigInt.fromI32(6)
+      Address.fromString("0x8aE7805a3F55ACA9D40fc52239f63A7976462Dc2"),
+      "DGD",
+      "DGD Token",
+      BigInt.fromI32(18)
     );
     staticDefinitions.push(tokenDGD);
 
     // Add AAVE
     let tokenAAVE = new StaticTokenDefinition(
-      Address.fromString("0x61f78d62152146de252474dCf5832b96048284e3"),
-      "USDC",
-      "USD Coin",
-      BigInt.fromI32(6)
+      Address.fromString("0x740d8b53B5832A1DF02ac0178238d2BDA237B5A9"),
+      "AAVE",
+      "AAVE Token",
+      BigInt.fromI32(18)
     );
     staticDefinitions.push(tokenAAVE);
 
     // Add LIF
     let tokenLIF = new StaticTokenDefinition(
-      Address.fromString("0x8C29e468ac2283F4120054cdA51F2f60846F91e0"),
-      "DAI",
-      "DAI",
-      BigInt.fromI32(6)
+      Address.fromString("0x16dB1a91F11E0200723fF9040B4Db101B4bE6D07"),
+      "RIF",
+      "RIF Token",
+      BigInt.fromI32(18)
     );
     staticDefinitions.push(tokenLIF);
 
     // Add SVD
     let tokenSVD = new StaticTokenDefinition(
-      Address.fromString("0xa9C2765b9d7943823570051C0FbeD6e280FC9389"),
-      "SUSDT",
-      "S USDT",
-      BigInt.fromI32(6)
+      Address.fromString("0x3A4fa21214c86B2901FAE3827E5F390AAc1beE0d"),
+      "SVD",
+      "SVD Token",
+      BigInt.fromI32(18)
     );
     staticDefinitions.push(tokenSVD);
 
     // Add TheDAO
     let tokenTheDAO = new StaticTokenDefinition(
-      Address.fromString("0x540f9a05232f719cc2a6cF0DcC9c6346EEBe7941"),
-      "KUSDC",
-      "KUSDC",
-      BigInt.fromI32(16)
+      Address.fromString("0xcd227ebe06AE538e730528f606D9001B8512296c"),
+      "TheDAO",
+      "TheDAO Token",
+      BigInt.fromI32(18)
     );
     staticDefinitions.push(tokenTheDAO);
 
-    // // Add HPB
-    // let tokenHPB = new StaticTokenDefinition(
-    //   Address.fromString("0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2"),
-    //   "HPB",
-    //   "HPBCoin",
-    //   BigInt.fromI32(18)
-    // );
-    // staticDefinitions.push(tokenHPB);
+    // Add HPB
+    let tokenHPB = new StaticTokenDefinition(
+      Address.fromString("0x192ff5CFdC80999d82151E4F9B2cd9AB7cC998E1"),
+      "Cake",
+      "Cake Token",
+      BigInt.fromI32(18)
+    );
+    staticDefinitions.push(tokenHPB);
 
     return staticDefinitions;
   }

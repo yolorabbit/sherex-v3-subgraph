@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: Factory
-    network: bsctestnet
+    network: polygon-amoy
     source:
-      address: "0xefc007c34ed53F5219D1d630bdE153EDDDEc3Ece"
+      address: "0xBCe3f4009a81ee67390ea8d290aC0315d00Ae5fb"
       abi: Factory
-      startBlock: 47744230
+      startBlock: 17375728
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,11 +35,11 @@ dataSources:
           handler: handlePoolCreated
   - kind: ethereum/contract
     name: NonfungiblePositionManager
-    network: bsctestnet
+    network: polygon-amoy
     source:
-      address: "0xD35707a2C351D378F73115Db71EECb67D3ec280B"
+      address: "0x869a469109630Ae0315315D596eaF53D83a100d3"
       abi: NonfungiblePositionManager
-      startBlock: 47744230
+      startBlock: 17375728
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -69,7 +69,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: bsctestnet
+    network: polygon-amoy
     source:
       abi: Pool
     mapping:
