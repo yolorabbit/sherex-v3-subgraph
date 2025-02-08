@@ -3,31 +3,38 @@ import { ONE_BD, ZERO_BD, ZERO_BI } from "./constants";
 import { Bundle, Pool, Token } from "../../generated/schema";
 import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { exponentToBigDecimal, safeDiv } from "./index";
+import { log } from "@graphprotocol/graph-ts";
 
 // prettier-ignore
-const WETH_ADDRESS = "0x2A76F143441020C07ecB6a79A198Aaf73b91e9fB";
+const WETH_ADDRESS = "0x48dc8fbe4cd138aa0784d8b337e8955bfa061bba";
 // prettier-ignore
-const USDC_WETH_03_POOL = "0x36696169c63e42cd08ce11f5deebbcebae652050";
+const USDC_WETH_03_POOL = "0x296ec2c06eb53c5f6a3961507979a2918e80e9ba";
 
-const STABLE_IS_TOKEN0 = "true" as string;
+const STABLE_IS_TOKEN0 = "false" as string;
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 // prettier-ignore
-export let WHITELIST_TOKENS: string[] = "0x740d8b53B5832A1DF02ac0178238d2BDA237B5A9,0x16dB1a91F11E0200723fF9040B4Db101B4bE6D07,0x192ff5CFdC80999d82151E4F9B2cd9AB7cC998E1,0x8aE7805a3F55ACA9D40fc52239f63A7976462Dc2,0x3A4fa21214c86B2901FAE3827E5F390AAc1beE0d,0xcd227ebe06AE538e730528f606D9001B8512296c,0x5F17042459934EB8466936Ef42D167CF37f550A8,0x79C2e35E3754133eBBc502c82018e7DbEC553566,0x34dcd6B6bADc5Ae8737F0Fb87988E80f1e2bC613".split(",");
+export let WHITELIST_TOKENS: string[] = "0x662474d0d34e78d5158ea20c1b41c5afdeb0dae5,0x61f78d62152146de252474dcf5832b96048284e3,0xda4b0edc5019ba278c385972f03a71edc9660b8b,0x8c29e468ac2283f4120054cda51f2f60846f91e0,0xa9c2765b9d7943823570051c0fbed6e280fc9389,0x540f9a05232f719cc2a6cf0dcc9c6346eebe7941".split(",");
 
 // prettier-ignore
-let STABLE_COINS: string[] = "0x5F17042459934EB8466936Ef42D167CF37f550A8,0x79C2e35E3754133eBBc502c82018e7DbEC553566,0x34dcd6B6bADc5Ae8737F0Fb87988E80f1e2bC613".split(",");
+let STABLE_COINS: string[] = "0x662474d0d34e78d5158ea20c1b41c5afdeb0dae5,0xda4b0edc5019ba278c385972f03a71edc9660b8b,0x8c29e468ac2283f4120054cda51f2f60846f91e0".split(",");
 
 let MINIMUM_ETH_LOCKED = BigDecimal.fromString("60");
 
-let Q192 = 2 ** 192;
+// Replace direct power calculation with BigInt
+let Q192 = BigInt.fromI32(2).pow(192);
+
 export function sqrtPriceX96ToTokenPrices(sqrtPriceX96: BigInt, token0: Token, token1: Token): BigDecimal[] {
   let num = sqrtPriceX96.times(sqrtPriceX96).toBigDecimal();
+  log.info("num: {}", [num.toString()]);
   let denom = BigDecimal.fromString(Q192.toString());
+  log.info("denom: {}", [denom.toString()]);
   let price1 = num.div(denom).times(exponentToBigDecimal(token0.decimals)).div(exponentToBigDecimal(token1.decimals));
+  log.info("price1: {}", [price1.toString()]);
 
   let price0 = safeDiv(BigDecimal.fromString("1"), price1);
+  log.info("price0: {}", [price0.toString()]);
   return [price0, price1];
 }
 
